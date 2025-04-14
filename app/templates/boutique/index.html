@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.name }} | {{ site.description or "Boutique" }}</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{{ site.seo_description or site.description }}">
+    <meta name="keywords" content="{{ site.seo_keywords }}">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="{{ site.name }}">
+    <meta property="og:description" content="{{ site.seo_description or site.description }}">
+    <meta property="og:image" content="{{ site.hero_image_url or site.logo_url }}">
+    <meta property="og:url" content="{{ site.get_url() }}">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{{ site.logo_url or url_for('static', filename='images/favicon.ico') }}">
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Theme CSS -->
+    <style>
+        /* Theme variables based on site theme settings */
+        :root {
+            --primary-color: {{ site.theme_json.get('primaryColor', '#6366f1') }};
+            --secondary-color: {{ site.theme_json.get('secondaryColor', '#ec4899') }};
+            --bg-color: {{ site.theme_json.get('backgroundColor', '#ffffff') }};
+            --text-color: {{ site.theme_json.get('textColor', '#1e293b') }};
+            --accent-color: {{ site.theme_json.get('accentColor', '#f59e0b') }};
+            --font-family: "{{ site.theme_json.get('fontFamily', 'Poppins') }}", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        /* Base Styles */
+        body {
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            background-size: cover;
+            background-position: center;
+            background-color: rgba(0,0,0,0.03);
+            position: relative;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            background-color: white;
+            padding: 5px;
+        }
+        
+        /* Product Gallery */
+        .product-card {
+            margin-bottom: 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+        
+        /* Social Feed */
+        .feed-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        
+        .feed-item {
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .feed-item:hover {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 2rem;
+        }
+        
+        /* Footer */
+        .social-icon {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .feed-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .hero-logo {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                {% if site.logo_url %}
+                    <img src="{{ site.logo_url }}" alt="{{ site.name }}" height="30" class="me-2">
+                {% endif %}
+                {{ site.name }}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#featured">Featured</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home" style="background-image: url('{{ site.hero_image_url or '' }}');">
+        {% if site.hero_image_url %}
+            <div class="hero-overlay"></div>
+        {% endif %}
+        <div class="container text-center hero-content">
+            {% if site.logo_url %}
+                <img src="{{ site.logo_url }}" alt="{{ site.name }}" class="hero-logo">
+            {% endif %}
+            <h1 class="display-4 fw-bold mb-3 {% if site.hero_image_url %}text-white{% endif %}">{{ site.name }}</h1>
+            {% if site.description %}
+                <p class="lead mb-4 {% if site.hero_image_url %}text-white{% endif %}">{{ site.description }}</p>
+            {% endif %}
+            <div>
+                <a href="#contact" class="btn btn-primary">Contact Me</a>
+                <a href="#featured" class="btn btn-outline-light ms-2">View Work</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-5" id="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <img src="{{ site.theme_json.get('aboutImage', site.hero_image_url) }}" alt="{{ site.name }}" class="img-fluid rounded">
+                </div>
+                <div class="col-md-6">
+                    <h2 class="mb-4">About</h2>
+                    {{ site.content_json.get('about', '<p>Welcome to my boutique! I create unique pieces inspired by my journey and experiences. Each creation tells a story and is made with passion and attention to detail.</p>') | safe }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-5 bg-light" id="featured">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2>Featured Products</h2>
+                <p class="text-muted">Check out some of my best work</p>
+            </div>
+            <div class="row">
+                {% set featured_products = site.products.filter_by(is_featured=True).all() %}
+                {% if featured_products %}
+                    {% for product in featured_products[:6] %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card product-card h-100">
+                                {% if product.image_url %}
+                                    <img src="{{ product.image_url }}" alt="{{ product.title }}" class="card-img-top product-image">
+                                {% endif %}
+                                {% if not product.in_stock %}
+                                    <span class="badge bg-danger product-badge">Sold Out</span>
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.title }}</h5>
+                                    {% if product.price %}
+                                        <p class="card-text fw-bold">{{ product.price }} {{ product.currency }}</p>
+                                    {% endif %}
+                                    <p class="card-text text-muted">{{ product.description | truncate(100) }}</p>
+                                    {% if product.external_link %}
+                                        <a href="{{ product.external_link }}" class="btn btn-sm btn-primary" target="_blank">View Details</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12 text-center">
+                        <p class="text-muted">No featured products yet.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Feed -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2>Recent Posts</h2>
+                <p class="text-muted">Follow me on social media for the latest updates</p>
+            </div>
+            <div class="feed-grid mb-4">
+                {% set instagram_posts = site.content_json.get('instagram_posts', []) %}
+                {% if instagram_posts %}
+                    {% for post in instagram_posts[:9] %}
+                        <a href="{{ post.permalink }}" target="_blank">
+                            <img src="{{ post.media_url }}" alt="Instagram Post" class="feed-item w-100">
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    {% for i in range(9) %}
+                        <div class="feed-item w-100 bg-light d-flex align-items-center justify-content-center">
+                            <i class="bi bi-instagram text-muted"></i>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="text-center">
+                <a href="https://instagram.com/" class="btn btn-outline-primary" target="_blank">Follow on Instagram</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Products -->
+    <section class="py-5 bg-light" id="products">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2>All Products</h2>
+                <p class="text-muted">Browse my full collection</p>
+            </div>
+            
+            <div class="mb-4">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-primary active" data-filter="all">All</button>
+                    {% set categories = site.content_json.get('categories', []) %}
+                    {% for category in categories %}
+                        <button type="button" class="btn btn-outline-primary" data-filter="{{ category.slug }}">{{ category.name }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="row">
+                {% set all_products = site.products.all() %}
+                {% if all_products %}
+                    {% for product in all_products %}
+                        <div class="col-md-4 mb-4 product-item" data-category="{{ product.category or 'uncategorized' }}">
+                            <div class="card product-card h-100">
+                                {% if product.image_url %}
+                                    <img src="{{ product.image_url }}" alt="{{ product.title }}" class="card-img-top product-image">
+                                {% endif %}
+                                {% if not product.in_stock %}
+                                    <span class="badge bg-danger product-badge">Sold Out</span>
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.title }}</h5>
+                                    {% if product.price %}
+                                        <p class="card-text fw-bold">{{ product.price }} {{ product.currency }}</p>
+                                    {% endif %}
+                                    <p class="card-text text-muted">{{ product.description | truncate(100) }}</p>
+                                    {% if product.external_link %}
+                                        <a href="{{ product.external_link }}" class="btn btn-sm btn-primary" target="_blank">View Details</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12 text-center">
+                        <p class="text-muted">No products added yet.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-5" id="contact">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="text-center mb-5">
+                        <h2>Get in Touch</h2>
+                        <p class="text-muted">Have a question or want to place a custom order?</p>
+                    </div>
+                    <div class="contact-form">
+                        <form id="contactForm" action="#" method="post">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" class="form-control" id="subject">
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container text-center">
+            <h2 class="mb-4">Join My Newsletter</h2>
+            <p class="mb-4">Subscribe to get updates on new products, exclusive offers, and more!</p>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form class="d-flex">
+                        <input type="email" class="form-control me-2" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-light">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">{{ site.name }}</h5>
+                    <p>{{ site.description }}</p>
+                    <div class="d-flex">
+                        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-white-50">Home</a></li>
+                        <li><a href="#about" class="text-white-50">About</a></li>
+                        <li><a href="#featured" class="text-white-50">Featured</a></li>
+                        <li><a href="#products" class="text-white-50">Products</a></li>
+                        <li><a href="#contact" class="text-white-50">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Contact Info</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> {{ site.content_json.get('location', '') }}</li>
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> {{ site.content_json.get('email', '') }}</li>
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i> {{ site.content_json.get('phone', '') }}</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4 bg-secondary">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <p class="mb-2 mb-md-0">© {{ now.year }} {{ site.name }}. All rights reserved.</p>
+                <p class="mb-0 text-white-50">Created with <a href="https://storify.com" class="text-white" target="_blank">Storify</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                    
+                    // Close mobile menu when clicking a link
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    if (navbarCollapse.classList.contains('show')) {
+                        navbarCollapse.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Product filtering
+            const filterButtons = document.querySelectorAll('[data-filter]');
+            const productItems = document.querySelectorAll('.product-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Show/hide products based on filter
+                    productItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Handle form submission (placeholder)
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // This would be replaced with actual form submission
+                    alert('Thanks for your message! This is a demo site, so no actual message was sent.');
+                    contactForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

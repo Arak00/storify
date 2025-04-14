@@ -1,0 +1,354 @@
+{% extends "base.html" %}
+
+{% block title %}Storify - Transform Your Social Media Into a Professional Boutique{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h1 class="hero-title">Transform your social media into your own boutique website</h1>
+                <p class="hero-subtitle">Import your social content from Instagram, TikTok, and Etsy to create a stunning professional website in minutes, no coding required.</p>
+                <div class="d-flex flex-column flex-sm-row gap-3">
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">Get Started Free</a>
+                    <a href="{{ url_for('main.features') }}" class="btn btn-outline-primary btn-lg">See Features</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="{{ url_for('static', filename='images/hero-image.svg') }}" alt="Storify Dashboard" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Social Platforms -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Connect All Your Platforms</h2>
+            <p class="text-muted mx-auto" style="max-width: 600px;">Import your content automatically from your favorite social platforms.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-3 col-6 text-center mb-4">
+                <div class="p-3">
+                    <i class="bi bi-instagram display-3 text-primary"></i>
+                    <h5 class="mt-3">Instagram</h5>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 text-center mb-4">
+                <div class="p-3">
+                    <i class="bi bi-tiktok display-3 text-primary"></i>
+                    <h5 class="mt-3">TikTok</h5>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 text-center mb-4">
+                <div class="p-3">
+                    <i class="bi bi-shop display-3 text-primary"></i>
+                    <h5 class="mt-3">Etsy</h5>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 text-center mb-4">
+                <div class="p-3">
+                    <i class="bi bi-cloud-upload display-3 text-primary"></i>
+                    <h5 class="mt-3">Manual Upload</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">How It Works</h2>
+            <p class="text-muted mx-auto" style="max-width: 600px;">Create your professional boutique website in three simple steps.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4 mb-md-0">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                            <i class="bi bi-person-plus text-white fs-1"></i>
+                        </div>
+                        <h4>1. Sign Up</h4>
+                        <p class="text-muted">Create an account and connect your social media platforms.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 mb-md-0">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                            <i class="bi bi-palette text-white fs-1"></i>
+                        </div>
+                        <h4>2. Customize</h4>
+                        <p class="text-muted">Choose a template and personalize it to match your brand.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                            <i class="bi bi-globe text-white fs-1"></i>
+                        </div>
+                        <h4>3. Publish</h4>
+                        <p class="text-muted">Launch your boutique and share it with your audience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Key Features</h2>
+            <p class="text-muted mx-auto" style="max-width: 600px;">Everything you need to create a professional online presence.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="d-flex">
+                    <div class="feature-icon">
+                        <i class="bi bi-magic"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Automatic Import</h5>
+                        <p class="text-muted">Import your content directly from your social media accounts.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="d-flex">
+                    <div class="feature-icon">
+                        <i class="bi bi-laptop"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Responsive Design</h5>
+                        <p class="text-muted">Your boutique website looks amazing on any device.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="d-flex">
+                    <div class="feature-icon">
+                        <i class="bi bi-palette2"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Customizable Templates</h5>
+                        <p class="text-muted">Choose from a variety of beautiful, professional designs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="d-flex">
+                    <div class="feature-icon">
+                        <i class="bi bi-cart"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Product Showcase</h5>
+                        <p class="text-muted">Display your products with beautiful galleries and descriptions.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="d-flex">
+                    <div class="feature-icon">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Analytics</h5>
+                        <p class="text-muted">Track visits, engagement, and popular products.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="d-flex">
+                    <div class="feature-icon">
+                        <i class="bi bi-globe"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Custom Domain</h5>
+                        <p class="text-muted">Use your own domain name for a professional online presence.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="{{ url_for('main.features') }}" class="btn btn-outline-primary">See All Features</a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">What Our Creators Say</h2>
+            <p class="text-muted mx-auto" style="max-width: 600px;">Join thousands of artists and creators who have transformed their online presence with Storify.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex mb-4">
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="mb-4">"I was able to set up my entire boutique in less than an hour. Now I have a professional site showcasing all my Instagram art that I can send to clients and galleries."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <span class="text-white fw-bold">JM</span>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="mb-0">Julia Martinez</h6>
+                                <small class="text-muted">Watercolor Artist</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex mb-4">
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="mb-4">"The automatic TikTok import saved me countless hours. Now my fans can browse all my content in one beautiful website instead of searching through social media."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <span class="text-white fw-bold">TJ</span>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="mb-0">Thomas Johnson</h6>
+                                <small class="text-muted">Content Creator</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex mb-4">
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <i class="bi bi-star-fill text-warning me-1"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="mb-4">"I connected my Etsy shop to Storify and now I have a professional website that perfectly matches my brand. The analytics help me understand what my customers want."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <span class="text-white fw-bold">SL</span>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="mb-0">Sarah Lewis</h6>
+                                <small class="text-muted">Jewelry Designer</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Pricing Plans</h2>
+            <p class="text-muted mx-auto" style="max-width: 600px;">Choose the plan that fits your needs. All plans include a 14-day free trial.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="pricing-card h-100">
+                    <div class="text-center mb-4">
+                        <h3>Free</h3>
+                        <div class="display-5 fw-bold">€0</div>
+                        <p class="text-muted">forever</p>
+                    </div>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Storify subdomain</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Up to 3 featured products</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Basic templates</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Social media integration</li>
+                        <li class="mb-2 text-muted"><i class="bi bi-x-circle me-2"></i> Custom domain</li>
+                        <li class="mb-2 text-muted"><i class="bi bi-x-circle me-2"></i> Analytics</li>
+                    </ul>
+                    <div class="text-center">
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-outline-primary btn-lg w-100">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="pricing-card pricing-popular h-100">
+                    <div class="text-center mb-4">
+                        <span class="badge bg-primary mb-2">Popular</span>
+                        <h3>Creator</h3>
+                        <div class="display-5 fw-bold">€9</div>
+                        <p class="text-muted">per month</p>
+                    </div>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Custom domain</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Up to 15 products</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Full customization</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Social media integration</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Basic analytics</li>
+                        <li class="mb-2 text-muted"><i class="bi bi-x-circle me-2"></i> Advanced analytics</li>
+                    </ul>
+                    <div class="text-center">
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg w-100">Try Free for 14 Days</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="pricing-card h-100">
+                    <div class="text-center mb-4">
+                        <h3>Studio</h3>
+                        <div class="display-5 fw-bold">€19</div>
+                        <p class="text-muted">per month</p>
+                    </div>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Custom domain</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Unlimited products</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Full customization</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Email integrations</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Advanced analytics</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Premium templates</li>
+                    </ul>
+                    <div class="text-center">
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-outline-primary btn-lg w-100">Try Free for 14 Days</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <p class="mb-0 text-muted">Need a done-for-you setup? <a href="{{ url_for('main.contact') }}">Contact us</a> about our VIP setup service (€79 one-time).</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <h2 class="mb-4">Ready to transform your social media into a professional boutique?</h2>
+        <div class="d-flex justify-content-center flex-column flex-sm-row gap-3">
+            <a href="{{ url_for('auth.register') }}" class="btn btn-light btn-lg">Get Started Free</a>
+            <a href="{{ url_for('main.contact') }}" class="btn btn-outline-light btn-lg">Contact Us</a>
+        </div>
+    </div>
+</section>
+{% endblock %} 
